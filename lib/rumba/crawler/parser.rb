@@ -1,17 +1,17 @@
 module Rumba
   module Crawler
-    class Page
+    class Parser
       include Rumba::Crawler::Models
       # Service Keys
       SK = ['css', 'root', 'regexp']
 
-      def parse(response, template)
+      def process(response, template)
         template = JSON.parse(template)
         @doc = Nokogiri::HTML(response)
         if template.is_a? Array
           parse_multi(@doc, template.first)
         else
-          parse_node(@doc, template, name)
+          parse_node(@doc, template, template.keys.first)
         end
       end
 
@@ -27,7 +27,7 @@ module Rumba
 
       def parse_node(doc, template, name)
         node = get_node(doc, template).first
-        if template.reject{|key, _| SK.include?(key)}.empty?
+        if leaf_node?(template)
           get_content(node, template)
         else
           create_object(name, node, template)
@@ -48,18 +48,24 @@ module Rumba
 
       def get_content(node, template)
         if template['regexp']
-          /#{template['regexp']}/.match(node.content).to_s
+          /#{template['regexp']}/i.match(node.content).to_s
         else
           node.content
         end
       end
 
       def get_node(doc, template)
-        if template['root']
+        if template.is_a?(String)
+          doc.css(template)
+        elsif template['root']
           @doc.css(template['root']).css(template['css'])
         else
           doc.css(template['css'])
         end
+      end
+
+      def leaf_node?(template)
+        template.is_a?(String) || template.reject{|key, _| SK.include?(key)}.empty?
       end
     end
   end
