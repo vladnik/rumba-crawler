@@ -53,7 +53,7 @@ module Rumba::Crawler
         parser.stub(game: object)
         parser.create_object(:game, :node, {'css' => 'body', 'name' => ['attr']})
       end
-      it "invokes a setter with parse_multi method for object attributes with Array value" do
+      it "invokes a setter with parse_node method for object other attributes" do
         object = double("object")
         object.should_receive(:name=).with(:result)
         parser.should_receive(:parse_node).with(:node, {"attr"=>"value"}, "name").and_return(:result)
@@ -68,7 +68,7 @@ module Rumba::Crawler
         node.should_receive(:content).and_return('some content')
         parser.get_content(node, {}).should eq 'some content'
       end
-      it "should use provided regexp" do
+      it "uses provided regexp to extract content" do
         node = double("node")
         node.should_receive(:content).and_return('content123')
         parser.get_content(node, {'regexp' => '[a-z]+'}).should eq 'content'
@@ -76,12 +76,12 @@ module Rumba::Crawler
     end
 
     describe "#get_node" do
-      it "should use css locator" do
+      it "uses css locator provided" do
         node = double("node")
         node.should_receive(:css).with('locator').and_return(:node)
         parser.get_node(node, {'css' => 'locator'}).should eq :node
       end
-      it "should use shortcut css locator" do
+      it "uses shortcut css locator" do
         node = double("node")
         node.should_receive(:css).with('locator').and_return(:node)
         parser.get_node(node, 'locator').should eq :node
@@ -89,10 +89,10 @@ module Rumba::Crawler
     end
 
     describe "#leaf_node?" do
-      it "should identify shortcut locator" do
+      it "identifies shortcut locator" do
         parser.leaf_node?('locator').should eq true
       end
-      it "should identify non service attribute" do
+      it "identifies non-service attributes" do
         parser.leaf_node?({'css' => 'locator'}).should eq true
         parser.leaf_node?({'name' => 'locator'}).should eq false
       end
