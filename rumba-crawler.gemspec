@@ -7,8 +7,8 @@ Gem::Specification.new do |spec|
   spec.name          = "rumba-crawler"
   spec.version       = Rumba::Crawler::VERSION
   spec.authors       = ["Volodymyr Ladnik"]
-  spec.email         = ["vladnik@abunkermode.com"]
-  spec.summary       = %q{Extracting game score and other data from web pages}
+  spec.email         = ["Volodymyr.UA@gmail.com"]
+  spec.summary       = %q{Web crawler with JSON-based DSL and EventMachine-powered page fetching}
   spec.description   = spec.summary
   spec.homepage      = ""
   spec.license       = "MIT"
