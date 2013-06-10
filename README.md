@@ -2,6 +2,7 @@
 [![Dependency Status](https://gemnasium.com/vladnik/rumba-crawler.png)](https://gemnasium.com/vladnik/rumba-crawler)
 [![Build Status](https://travis-ci.org/vladnik/rumba-crawler.png?branch=master)](https://travis-ci.org/vladnik/rumba-crawler)
 [![Code Climate](https://codeclimate.com/github/vladnik/rumba-crawler.png)](https://codeclimate.com/github/vladnik/rumba-crawler)
+[![Gem Version](https://badge.fury.io/rb/rumba-crawler.png)](http://badge.fury.io/rb/rumba-crawler)
 
 Web crawler with JSON-based DSL and EventMachine-powered page fetching
 
